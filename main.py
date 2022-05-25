@@ -22,7 +22,7 @@ with st.sidebar:
         tickerstr = f'<p style="font-family:sans-serif; color:black; font-size: 12px;"><b><i>{ticker} : {check_stock(ticker)["Long Name"]}</i></b></p>'
         st.markdown(tickerstr, unsafe_allow_html=True)
 
-if pycron.is_now('* * * * *', dt=datetime.now(timezone('EST'))):
+if pycron.is_now('* 9-15 * * 1-5', dt=datetime.now(timezone('EST'))):
     st.markdown(
         """
         <style>
@@ -96,7 +96,7 @@ if pycron.is_now('* * * * *', dt=datetime.now(timezone('EST'))):
                     # time.sleep(900)  # Making sure we don't run the logic twice in a minute
                     # else:
                     #     time.sleep(20)  # Check again in 20 seconds
-                r = await asyncio.sleep(1)
+                r = await asyncio.sleep(900)
 
 
 
