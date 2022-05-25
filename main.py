@@ -14,9 +14,10 @@ tickers =['WIRE','KO', 'CLPS', 'TSLA', 'ROK', 'SPY', 'BTC-USD']
 buying_power = account_state()['Buying Power (US$)']
 
 def trading(tickers):
-    st.write("Starting the trading algo")
+
     while True:
         if pycron.is_now('1,15,30,45,59 9-15 * * 1-5', dt=datetime.now(timezone('EST'))):
+            st.write("Starting the trading algo")
             for ticker in tickers:
                 SMA_9, SMA_30 = get_moving_averages(ticker)
                 ticker_text = f'<p style="font-family:sans-serif; color:black; font-size: 12px;"><b><i>Information about {ticker}</i></b></p>'
@@ -27,7 +28,7 @@ def trading(tickers):
                 if SMA_9 > SMA_30:
                     # We should buy if we don't already own the stock
                     if ticker not in [i["symbol"] for i in get_positions()]:
-
+#add the check for buying power
                         st.write("Currently buying", ticker)
                         buy_operation(ticker, 1)
                     else:  # If position in portfolio we reinforce it
