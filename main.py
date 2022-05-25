@@ -12,7 +12,7 @@ from trading_algo import get_moving_averages
 # , 'CLPS', 'TSLA', 'ROK', 'SPY', 'BTC-USD'
 
 tickers =['WIRE','KO', 'CLPS', 'TSLA', 'ROK', 'SPY','VOO']
-
+st.set_page_config(page_title="Trading Bot", layout="wide", page_icon="🤖")
 
 st.title("Trading Bot")
 st.write("The bot is trading every 15mn")
@@ -109,4 +109,5 @@ if pycron.is_now('* 9-15 * * 1-5', dt=datetime.now(timezone('EST'))):
     positions_table = st.empty()
 
     asyncio.run(trade_bot(account_header, account_overview, positions_header, positions_hold,bot_start,ticker_info,positions_table))
-
+else:
+    st.write("US market closed")
