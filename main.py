@@ -16,6 +16,7 @@ buying_power = account_state()['Buying Power (US$)']
 def trading(tickers):
 
     while True:
+
         if pycron.is_now('1,15,30,45,59 9-15 * * 1-5', dt=datetime.now(timezone('EST'))):
             st.write("Starting the trading algo")
             for ticker in tickers:
@@ -47,7 +48,7 @@ def trading(tickers):
         return
 
 st.title("Trading Bot")
-
+st.write("The bot is trading every 15mn")
 
 # Using object notation
 # add_selectbox = st.sidebar.selectbox(
