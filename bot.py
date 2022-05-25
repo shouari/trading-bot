@@ -8,6 +8,7 @@ from pytz import timezone
 
 CONFIG = json.load(open("./config.json"))
 API_KEY, SECRET_KEY, BASE_URL = CONFIG["API_KEY"], CONFIG["SECRET_KEY"], CONFIG["BASE_URL"]
+tickers =['WIRE','KO', 'CLPS', 'TSLA', 'ROK', 'SPY', 'BTCUSD']
 
 def buy_operation(ticker, quantity):
   """
@@ -73,19 +74,26 @@ def get_moving_averages(ticker):
 if __name__ == "__main__":
     print("Starting the trading algo")
     while True:
-        if pycron.is_now('30 9-15 * * 1-5', dt=datetime.now(timezone('EST'))):  
-            ticker = "KO"
-            SMA_9, SMA_30 = get_moving_averages(ticker)
-            if SMA_9 > SMA_30:
-                # We should buy if we don't already own the stock
-                if ticker not in [i["symbol"] for i in get_positions()]:
-                    print("Currently buying", ticker)
-                    buy_operation(ticker, 1)
-            if SMA_9 < SMA_30:
-                # We should liquidate our position if we own the stock
-                if ticker in [i["symbol"] for i in get_positions()]:
-                    print("Currently liquidating our", ticker, "position")
-                    close_position(ticker)
-            time.sleep(60) # Making sure we don't run the logic twice in a minute
-        else:
-            time.sleep(60)  # Check again in 60 seconds
+
+        if pycron.is_now('* 9-15 * * 1-5', dt=datetime.now(timezone('EST'))):
+            for ticker in tickers:
+                print(ticker)
+                SMA_9, SMA_30 = get_moving_averages(ticker)
+                if SMA_9 > SMA_30:
+                    print("9>30")
+                    # We should buy if we don't already own the stock
+                    if ticker not in [i["symbol"] for i in get_positions()]:
+                        print("Currently buying", ticker)
+                        buy_operation(ticker, 1)
+                    else:
+                        print("Currently reinforcing position", ticker)
+                        buy_operation(ticker, 1)
+                if SMA_9 < SMA_30:
+                    print("9<30")
+                    # We should liquidate our position if we own the stock
+                    if ticker in [i["symbol"] for i in get_positions()]:
+                        print("Currently liquidating our", ticker, "position")
+                        close_position(ticker)
+                time.sleep(60) # Making sure we don't run the logic twice in a minute
+            else:
+                time.sleep(20)  # Check again in 60 seconds
