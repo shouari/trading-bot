@@ -16,7 +16,7 @@ tickers =['WIRE','KO', 'CLPS', 'TSLA', 'ROK', 'SPY', 'BTC-USD']
 def trading(tickers):
     st.write("Starting the trading algo")
     while True:
-        if pycron.is_now('* * * * 1-5', dt=datetime.now(timezone('EST'))):
+        if pycron.is_now('1,15,30,45,59 9-15 * * 1-5', dt=datetime.now(timezone('EST'))):
             for ticker in tickers:
                 SMA_9, SMA_30 = get_moving_averages(ticker)
                 ticker_text = f'<p style="font-family:sans-serif; color:black; font-size: 12px;"><b><i>Information about {ticker}</i></b></p>'
