@@ -1,5 +1,6 @@
 import requests
 import json
+from market_info import account_state,check_stock
 
 
 CONFIG = json.load(open("./config.json"))
@@ -42,3 +43,12 @@ def close_position(ticker):
         'APCA-API-SECRET-KEY': SECRET_KEY
     }
     return requests.request("DELETE", url, headers=headers).json()
+
+def buying_check(ticker):
+    buying_power = float(account_state()['Buying Power (US$)'])
+    stock_price= float(check_stock(ticker)["Regular Market Price"])
+
+    return True if buying_power>stock_price else False
+
+
+

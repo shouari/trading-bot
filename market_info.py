@@ -1,6 +1,7 @@
 import requests
 import json
 import yfinance as yf
+import streamlit as st
 
 
 CONFIG = json.load(open("./config.json"))
@@ -24,6 +25,7 @@ def account_state():
 
 
 # Later functionality to be added (ability to add new ticker)
+@st.cache(ttl=900)
 def check_stock(ticker):
     ticker_info = yf.Ticker(ticker)
     info = None
@@ -42,10 +44,11 @@ def check_stock(ticker):
             "Market Cap": ticker_info.info['marketCap'],
             "Regular Market Price": ticker_info.info['regularMarketPrice']
         }
-        print(type(info))
+
     except:
         print(f"Cannot get info of {ticker}, it probably does not exist")
      # Got the info of the ticker, do more stuff with it
-    return info
 
+    return info
+# print(check_stock("TSLA")["Long Name"])
 

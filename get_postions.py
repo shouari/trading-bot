@@ -23,5 +23,6 @@ def get_positions():
 
 
     return positions
+# print(get_positions())
 
 
