@@ -16,8 +16,7 @@ buying_power = account_state()['Buying Power (US$)']
 def trading(tickers):
 
     while True:
-
-        if pycron.is_now('1,15,30,45,59 9-15 * * 1-5', dt=datetime.now(timezone('EST'))):
+        if pycron.is_now('* 9-15 * * 1-5', dt=datetime.now(timezone('EST'))):
             st.write("Starting the trading algo")
             for ticker in tickers:
                 SMA_9, SMA_30 = get_moving_averages(ticker)
@@ -42,7 +41,7 @@ def trading(tickers):
                         close_position(ticker)
                     else:
                         st.write(f"No need to buy {ticker} at the time")
-                time.sleep(60)  # Making sure we don't run the logic twice in a minute
+                time.sleep(900)  # Making sure we don't run the logic twice in a minute
             # else:
             #     time.sleep(20)  # Check again in 20 seconds
         return
