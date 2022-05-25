@@ -21,8 +21,7 @@ def account_state():
         "Portfolio Value (US$)":"{:,.2f}".format(float(account_info["portfolio_value"]))
     }
     return account_status
-# print(type(account_state()))
-# print(account_state())
+
 
 # Later functionality to be added (ability to add new ticker)
 def check_stock(ticker):

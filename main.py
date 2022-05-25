@@ -11,7 +11,7 @@ from trading_algo import get_moving_averages
 
 
 tickers =['WIRE','KO', 'CLPS', 'TSLA', 'ROK', 'SPY', 'BTC-USD']
-
+buying_power = account_state()['Buying Power (US$)']
 
 def trading(tickers):
     st.write("Starting the trading algo")
@@ -27,6 +27,7 @@ def trading(tickers):
                 if SMA_9 > SMA_30:
                     # We should buy if we don't already own the stock
                     if ticker not in [i["symbol"] for i in get_positions()]:
+
                         st.write("Currently buying", ticker)
                         buy_operation(ticker, 1)
                     else:  # If position in portfolio we reinforce it
