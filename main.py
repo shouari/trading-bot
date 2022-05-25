@@ -60,7 +60,7 @@ with st.container():#table containing the account summary
 
 with st.container():#table containing the positions summary
     st.write("Positions as of:", date.today())
-    positions_summary = {'symbol': [], 'qty': [], 'avg_entry_price': [], 'market_value': []}
+    positions_summary = {'Symbol': [], 'Quantity': [], 'Average Entry Price': [], 'Market Value': []}
     for position in get_positions():
         positions_summary['symbol'].append(position['symbol'])
         positions_summary['qty'].append(position['qty'])
