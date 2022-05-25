@@ -62,10 +62,10 @@ with st.container():#table containing the positions summary
     st.write("Positions as of:", date.today())
     positions_summary = {'Symbol': [], 'Quantity': [], 'Average Entry Price': [], 'Market Value': []}
     for position in get_positions():
-        positions_summary['symbol'].append(position['symbol'])
-        positions_summary['qty'].append(position['qty'])
-        positions_summary['avg_entry_price'].append(position['avg_entry_price'])
-        positions_summary['market_value'].append(position['market_value'])
+        positions_summary['Symbol'].append(position['symbol'])
+        positions_summary['Quantity'].append(position['qty'])
+        positions_summary['Average Entry Price'].append(position['avg_entry_price'])
+        positions_summary['Market Value'].append(position['market_value'])
 
     df = pd.DataFrame.from_dict(positions_summary,orient="index")
     df = df.astype(str)
