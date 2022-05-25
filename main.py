@@ -5,7 +5,7 @@ import pycron
 from pytz import timezone
 import time
 from get_postions import get_positions
-from market_info import account_state
+from market_info import account_state,check_stock
 from operations import buy_operation, close_position
 from trading_algo import get_moving_averages
 
@@ -19,8 +19,12 @@ def trading(tickers):
         if pycron.is_now('* * * * 1-5', dt=datetime.now(timezone('EST'))):
             for ticker in tickers:
                 SMA_9, SMA_30 = get_moving_averages(ticker)
+                ticker_text = f'<p style="font-family:sans-serif; color:black; font-size: 12px;"><b><i>Information about {ticker}</i></b></p>'
+                st.markdown(ticker_text, unsafe_allow_html=True)
+                df = pd.DataFrame.from_dict(check_stock(ticker), orient="index", columns=["Value"])
+                df = df.astype(str)
+                st.table(df)
                 if SMA_9 > SMA_30:
-
                     # We should buy if we don't already own the stock
                     if ticker not in [i["symbol"] for i in get_positions()]:
                         st.write("Currently buying", ticker)
@@ -29,16 +33,16 @@ def trading(tickers):
                         st.write("Currently reinforcing position", ticker)
                         buy_operation(ticker, 1)
                 if SMA_9 < SMA_30:
-
-                    # We should liquidate our position if we own the stock
+                                        # We should liquidate our position if we own the stock
                     if ticker in [i["symbol"] for i in get_positions()]:
                         st.write("Currently liquidating our", ticker, "position")
                         close_position(ticker)
+                    else:
+                        st.write(f"No need to buy {ticker} at the time")
                 time.sleep(60)  # Making sure we don't run the logic twice in a minute
             # else:
             #     time.sleep(20)  # Check again in 20 seconds
-            print("checking again in 15mn")
-    return
+        return
 
 st.title("Trading Bot")
 
@@ -48,11 +52,25 @@ st.title("Trading Bot")
 #     "How would you like to be contacted?",
 #     ("Email", "Home phone", "Mobile phone")
 # )
-with st.container():
+with st.container():#table containing the account summary
     st.write("Account status as of:", date.today())
     df = pd.DataFrame.from_dict(account_state(),orient="index", columns=["Value"])
     df = df.astype(str)
     st.table(df)
+
+with st.container():#table containing the positions summary
+    st.write("Positions as of:", date.today())
+    positions_summary = {'symbol': [], 'qty': [], 'avg_entry_price': [], 'market_value': []}
+    for position in get_positions():
+        positions_summary['symbol'].append(position['symbol'])
+        positions_summary['qty'].append(position['qty'])
+        positions_summary['avg_entry_price'].append(position['avg_entry_price'])
+        positions_summary['market_value'].append(position['market_value'])
+
+    df = pd.DataFrame.from_dict(positions_summary,orient="index")
+    df = df.astype(str)
+    st.table(df)
+
 with st.sidebar:
     # add_radio = st.radio(
     #     "Choose a shipping method",

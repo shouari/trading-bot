@@ -19,8 +19,9 @@ def get_positions():
         'APCA-API-KEY-ID': API_KEY,
         'APCA-API-SECRET-KEY': SECRET_KEY,
     }
-    return requests.request("GET", url, headers=headers).json()
+    positions = requests.request("GET", url, headers=headers).json()
 
-print(type(get_positions()))
-print(get_positions())
+
+    return positions
+
 

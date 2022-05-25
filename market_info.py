@@ -25,16 +25,28 @@ def account_state():
 # print(account_state())
 
 # Later functionality to be added (ability to add new ticker)
-# def check_stock():
-#     for t in ["MSFT", "FAKE"]:
-#         ticker = yf.Ticker(t)
-#         info = None
-#         try:
-#             info = ticker.info
-#         except:
-#             print(f"Cannot get info of {t}, it probably does not exist")
-#             continue
-#
-#         # Got the info of the ticker, do more stuff with it
-#         print(f"Info of {t}: {info}")
-# check_stock()
+def check_stock(ticker):
+    ticker_info = yf.Ticker(ticker)
+    info = None
+    info_bulk =None
+    try:
+        info_bulk = ticker_info.info
+        info = {
+            "Symbol": ticker_info.info['symbol'],
+            "Long Name": ticker_info.info['longName'],
+            "Enterprise Revenue": ticker_info.info['enterpriseToRevenue'],
+            "Revenue Quarter Growth": ticker_info.info['revenueQuarterlyGrowth'],
+            "Total Assets": ticker_info.info['totalAssets'],
+            "3 Years Ave. return": ticker_info.info['threeYearAverageReturn'],
+            "Regular market previous close": ticker_info.info['regularMarketPreviousClose'],
+            "Open": ticker_info.info['open'],
+            "Market Cap": ticker_info.info['marketCap'],
+            "Regular Market Price": ticker_info.info['regularMarketPrice']
+        }
+        print(type(info))
+    except:
+        print(f"Cannot get info of {ticker}, it probably does not exist")
+     # Got the info of the ticker, do more stuff with it
+    return info
+
+
