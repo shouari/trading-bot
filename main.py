@@ -54,7 +54,7 @@ if __name__ == "__main__":
 
             asyncio.run(
                 trade_bot(bot_start, ticker_info, positions_table))
-
+            time.sleep(60*15)
             continue
         else:
             st.markdown(
@@ -81,4 +81,5 @@ if __name__ == "__main__":
                     r = await asyncio.sleep(5)
             close = st.empty()
             asyncio.run(open_market(close))
+        time.sleep(60*60)
         continue
