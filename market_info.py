@@ -23,6 +23,14 @@ def account_state():
     }
     return account_status
 
+# def profit_loss():
+#     url = BASE_URL + "/v2/account/portfolio/history"
+#     headers = {
+#         'APCA-API-KEY-ID': API_KEY,
+#         'APCA-API-SECRET-KEY': SECRET_KEY,
+#         'Content-Type': 'application/json'
+#     }
+#     profit_loss = requests.request("GET", url, headers=headers).json()
 
 # Later functionality to be added (ability to add new ticker)
 @st.cache(ttl=900)

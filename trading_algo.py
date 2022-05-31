@@ -1,12 +1,7 @@
 import requests
 import json
 import yfinance as yf
-import pycron
-import time
-from datetime import datetime
-from pytz import timezone
-from get_postions import get_positions
-from operations import buy_operation, close_position
+
 
 CONFIG = json.load(open("./config.json"))
 API_KEY, SECRET_KEY, BASE_URL = CONFIG["API_KEY"], CONFIG["SECRET_KEY"], CONFIG["BASE_URL"]
