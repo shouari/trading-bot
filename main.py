@@ -8,8 +8,15 @@ from pytz import timezone
 from get_postions import get_positions
 from market_info import account_state, check_stock
 from operations import trade_bot, dashboard
+import logging
+
+trade_history = "trade_history.txt"
+logging.basicConfig(filename=trade_history, filemode= "w" ,level=logging.INFO)
 
 if __name__ == "__main__":
+    trade_history = "trade_history.txt"
+    logging.basicConfig(filename='C:\\Users\\SalimHouari\\Documents\\Pycharm projects\\trading-bot\\trading_history.txt', filemode="a", level=logging.INFO, force=True)
+    logger = logging.getLogger()
     st.set_page_config(page_title="Trading Bot", layout="wide", page_icon="🤖")
     title = st.empty()
     header = st.empty()
@@ -18,7 +25,8 @@ if __name__ == "__main__":
     with st.sidebar:
         side_title = st.empty()
         ticker_lable = st.empty()
-    tickers = ['WIRE', 'KO', 'CLPS', 'TSLA', 'ROK', 'SPY', 'VOO']
+    # ['WIRE', 'KO', 'CLPS', 'TSLA', 'ROK', 'SPY', 'VOO']
+    tickers = ['WIRE']
     account_header = st.empty()
     account_overview = st.empty()
     positions_header = st.empty()
@@ -79,6 +87,7 @@ if __name__ == "__main__":
                         </p>
                         """, unsafe_allow_html=True)
                     r = await asyncio.sleep(5)
+                    logger.info(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} : US market closed at this time')
             close = st.empty()
             asyncio.run(open_market(close))
         time.sleep(60*60)

@@ -7,8 +7,10 @@ from datetime import datetime, date
 from get_postions import get_positions
 from market_info import account_state, check_stock
 from trading_algo import get_moving_averages
+import logging
 
-
+trade_history = "trade_history.log"
+logging.basicConfig(filename=trade_history, level=logging.INFO)
 CONFIG = json.load(open("./config.json"))
 API_KEY, SECRET_KEY, BASE_URL = CONFIG["API_KEY"], CONFIG["SECRET_KEY"], CONFIG["BASE_URL"]
 
@@ -73,6 +75,7 @@ async def trade_bot(bot_start, ticker_info,
                 # We should buy if we don't already own the stock
                 if ticker not in [i["symbol"] for i in get_positions()]:
                     st.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} : Currently buying  {ticker}')
+                    logging.info(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} : Currently buying  {ticker}')
                     buy_operation(ticker, 1)
             else:
                 st.write(
