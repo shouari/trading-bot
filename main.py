@@ -17,7 +17,7 @@ if __name__ == "__main__":
     trade_history = "trade_history.txt"
     logging.basicConfig(filename='C:\\Users\\SalimHouari\\Documents\\Pycharm projects\\trading-bot\\trading_history.txt', filemode="a", level=logging.INFO, force=True)
     logger = logging.getLogger()
-    st.set_page_config(page_title="Trading Bot", layout="wide", page_icon="🤖")
+    st.set_page_config(page_title="Trading Bot", layout="wide")
     title = st.empty()
     header = st.empty()
     title.title("Trading Bot")
