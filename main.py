@@ -10,8 +10,7 @@ from market_info import account_state, check_stock
 from operations import trade_bot, dashboard
 import logging
 
-trade_history = "trade_history.txt"
-logging.basicConfig(filename=trade_history, filemode= "w" ,level=logging.INFO)
+
 
 if __name__ == "__main__":
     trade_history = "trade_history.txt"
@@ -26,7 +25,7 @@ if __name__ == "__main__":
         side_title = st.empty()
         ticker_lable = st.empty()
     # ['WIRE', 'KO', 'CLPS', 'TSLA', 'ROK', 'SPY', 'VOO']
-    tickers = ['WIRE']
+    tickers = ['WIRE', 'KO', 'CLPS', 'TSLA', 'ROK', 'SPY', 'VOO']
     account_header = st.empty()
     account_overview = st.empty()
     positions_header = st.empty()
